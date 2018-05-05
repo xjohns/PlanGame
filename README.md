@@ -1,2 +1,2 @@
-# PlanGame
-a web game of plan, by using cocos creator
+# hello-world
+Hello world new project template.
