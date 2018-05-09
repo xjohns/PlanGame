@@ -7,21 +7,32 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
 const {ccclass, property} = cc._decorator;
 
+
 @ccclass
-export default class EditButonController extends cc.Component {
+export default class MainView extends cc.Component {
+
+    @property(cc.Button)
+    startButton: cc.Button = null;
+
+    @property(cc.Button)
+    editButton: cc.Button = null;
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.node.on('click', event1 => {
+        this.startButton.node.on('click', event1 => {
+            cc.director.loadScene('StartPlan');
+        });
+
+        this.editButton.node.on('click', event1 => {
             cc.director.loadScene('EditPlan');
         })
     }
 
     start () {
+
     }
 
     // update (dt) {}
