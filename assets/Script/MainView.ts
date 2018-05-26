@@ -7,28 +7,47 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+import {PlanContext} from "./PlanContext";
+
 const {ccclass, property} = cc._decorator;
 
 
 @ccclass
-export default class MainView extends cc.Component {
+export class MainView extends cc.Component {
 
     @property(cc.Button)
     startButton: cc.Button = null;
 
     @property(cc.Button)
-    editButton: cc.Button = null;
+    addButton: cc.Button = null;
 
+    @property(cc.Node)
+    addPlanALert: cc.Node = null;
+
+    @property(cc.Button)
+    addPlanConfirmButton: cc.Button = null;
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        PlanContext.init();
         this.startButton.node.on('click', event1 => {
-            cc.director.loadScene('StartPlan');
+            if (PlanContext.localPlans)
+            {
+                cc.director.loadScene('StartPlan');
+            }
+            else
+            {
+                this.addPlanALert.active = true;
+            }
         });
 
-        this.editButton.node.on('click', event1 => {
+        this.addButton.node.on('click', event1 => {
             cc.director.loadScene('EditPlan');
-        })
+        });
+
+        this.addPlanConfirmButton.node.on('click', event1 => {
+            this.addPlanALert.active = false;
+        });
     }
 
     start () {

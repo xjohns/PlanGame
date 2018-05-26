@@ -11,35 +11,10 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class StartFunctionLayoutView extends cc.Component {
-
-    @property(cc.Button)
-    backButton: cc.Button = null;
-
-    @property(cc.Button)
-    startButton: cc.Button = null;
-
-    @property(cc.Label)
-    infoLabel: cc.Label = null;
-
-
-    // LIFE-CYCLE CALLBACKS:
-
-    onLoad () {
-        this.backButton.node.on('click', event1 => {
-            cc.director.loadScene('Main');
-        });
-
-        this.startButton.node.on('click', event2 => {
-            cc.director.loadScene('ShowPlanGame');
-        });
-
-        this.infoLabel.string = '日期：';
-    }
-
-    start () {
-
-    }
-
-    // update (dt) {}
+export interface IPlanModel{
+    name?: string;
+    wisdomEffect?: number;
+    healthEffect?: number;
+    funEffect?: number;
+    timeSpend?: number;
 }

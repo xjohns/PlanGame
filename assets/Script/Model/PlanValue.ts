@@ -11,27 +11,16 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class StartPlanView extends cc.Component {
+export class PlanValue {
+    public static maxWisdom: number = 200;
+    public static perWisdom: number = 0.5;
+    public static maxHealth: number = 100;
+    public static perHealth: number = 1;
+    public static maxFun: number = 100;
+    public static perFun: number = 1;
+    public static maxTime: number = 6;
+    public static perTime: number = 0.5;
 
-    @property(cc.Node)
-    forenoonPlanLayout: cc.Node = null;
-
-    @property(cc.Node)
-    afternoonPlanLayout: cc.Node = null;
-
-    @property(cc.Node)
-    nightPlanLayout: cc.Node = null;
-
-    @property(cc.Node)
-    functionLayout: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
-
-    onLoad () {
-    }
-
-    start () {
-
-    }
-
     // update (dt) {}
 }
