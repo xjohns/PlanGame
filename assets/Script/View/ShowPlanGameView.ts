@@ -33,17 +33,20 @@ export class ShowPlanGameView extends cc.Component {
     onLoad () {
         for (let i = 1; i <= PlanContext.foreTaskList.length; i++)
         {
-            this.forePlanString.concat(PlanContext.foreTaskList[i-1] + ', ');
+            console.log('PlanContext.foreTaskList[i-1] = ', PlanContext.foreTaskList[i-1]);
+            this.forePlanString = this.forePlanString.concat(PlanContext.foreTaskList[i-1] + ', ');
+            console.log('this.forePlanString = ', this.forePlanString);
         }
         for (let i = 1; i <= PlanContext.afterTaskList.length; i++)
         {
-            this.afterPlanString.concat(PlanContext.afterTaskList[i-1] + ', ');
+            this.afterPlanString = this.afterPlanString.concat(PlanContext.afterTaskList[i-1] + ', ');
         }
         for (let i = 1; i <= PlanContext.nightTaskList.length; i++)
         {
-            this.nightPlanString.concat(PlanContext.nightTaskList[i-1] + ', ');
+            this.nightPlanString = this.nightPlanString.concat(PlanContext.nightTaskList[i-1] + ', ');
         }
         this.planlabel.string = '上午你打算' + this.forePlanString + '。\n' + '下午你开始' + this.afterPlanString + '。\n' + '到了晚上你准备' + this.nightPlanString + '。\n嗯，不管怎样，一天还是过去了。';
+        console.log('this.planlabel.string = ', this.planlabel.string);
         this.confirmButton.node.on('click', event1 => {
             cc.director.loadScene('StartPlan');
         });

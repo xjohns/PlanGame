@@ -170,12 +170,14 @@ export class StartPlanView extends cc.Component {
                         this.foreContent.addChild(node);
                         console.log('forePrefab = ', prefab);
                     }
-                    let item:cc.Node = this.foreContent.children[i-1];
+                    let item = this.foreContent.children[i-1];
+                    item.active = true;
                     let taskNameLabel = item.children[0].getComponent(Label);
                     taskNameLabel.string = PlanContext.foreTaskList[i-1];
                     item.off('click');
                     item.on('click', event1 => {
-                        this.handleDeleteTaskView(taskNameLabel.string, type, index);
+                        console.log('i-1 = ', i-1);
+                        this.handleDeleteTaskView(taskNameLabel.string, type, i-1);
                     });
                 }
                 break;
@@ -195,12 +197,13 @@ export class StartPlanView extends cc.Component {
                         const node = cc.instantiate(prefab);
                         this.afterContent.addChild(node);
                     }
-                    let item:cc.Node = this.afterContent.children[i-1];
+                    let item = this.afterContent.children[i-1];
+                    item.active = true;
                     let taskNameLabel = item.children[0].getComponent(Label);
                     taskNameLabel.string = PlanContext.afterTaskList[i-1];
                     item.off('click');
                     item.on('click', event1 => {
-                        this.handleDeleteTaskView(taskNameLabel.string, type, index);
+                        this.handleDeleteTaskView(taskNameLabel.string, type, i-1);
                     });
                 }
                 break;
@@ -219,12 +222,13 @@ export class StartPlanView extends cc.Component {
                         const node = cc.instantiate(prefab);
                         this.nightContent.addChild(node);
                     }
-                    let item:cc.Node = this.nightContent.children[i-1];
+                    let item = this.nightContent.children[i-1];
+                    item.active = true;
                     let taskNameLabel = item.children[0].getComponent(Label);
                     taskNameLabel.string = PlanContext.nightTaskList[i-1];
                     item.off('click');
                     item.on('click', event1 => {
-                        this.handleDeleteTaskView(taskNameLabel.string, type, index);
+                        this.handleDeleteTaskView(taskNameLabel.string, type, i-1);
                     });
                 }
                 break;
@@ -244,18 +248,21 @@ export class StartPlanView extends cc.Component {
             {
                 case 0:
                     PlanContext.foreTaskList.splice(index, 1);
-                    this.foreContent.removeChild(index);
-                    this.updateTaskContent(type);
+                    this.foreContent.children[index].active = false;
+                    // this.foreContent.removeChild(index);
+                    // this.updateTaskContent(type);
                     break;
                 case 1:
                     PlanContext.afterTaskList.splice(index, 1);
-                    this.afterContent.removeChild(index);
-                    this.updateTaskContent(type);
+                    this.afterContent.children[index].active = false;
+                    // this.afterContent.removeChild(index);
+                    // this.updateTaskContent(type);
                     break;
                 case 2:
                     PlanContext.nightTaskList.splice(index, 1);
-                    this.nightContent.removeChild(index);
-                    this.updateTaskContent(type);
+                    this.afterContent.children[index].active = false;
+                    // this.nightContent.removeChild(index);
+                    // this.updateTaskContent(type);
                     break;
             }
             this.alertDeleteTaskView.active = false;
