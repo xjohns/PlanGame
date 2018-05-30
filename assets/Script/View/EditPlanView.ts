@@ -19,6 +19,9 @@ export class EditPlanView extends cc.Component {
     @property(cc.Label)
     planNameLabel: cc.Label = null;
 
+    @property(cc.EditBox)
+    planNameEditBox: cc.EditBox = null;
+
     @property(cc.Label)
     wisdomLabel: cc.Label = null;
 
@@ -32,6 +35,9 @@ export class EditPlanView extends cc.Component {
     timeSpendLabel: cc.Label = null;
 
     @property(cc.Button)
+    backButton: cc.Button = null;
+
+    @property(cc.Button)
     saveButton: cc.Button = null;
 
     private plan: IPlanModel = {};
@@ -40,13 +46,18 @@ export class EditPlanView extends cc.Component {
 
     onLoad () {
         this.init();
-        this.planNameLabel.node.on('click', event1 => {
-            console.log('修改计划名');
+        this.backButton.node.on('click', event2 => {
+            cc.director.loadScene('Main');
         });
         this.saveButton.node.on('click', event2 => {
             this.savePlanContext();
             cc.director.loadScene('Main');
-        })
+        });
+        this.planNameEditBox.node.on('editing-did-ended', event1 => {
+            this.plan.name = this.planNameEditBox.string;
+            this.planNameEditBox.string = '';
+            this.planNameLabel.string = this.plan.name;
+        });
     }
 
     init()
@@ -134,7 +145,7 @@ export class EditPlanView extends cc.Component {
         switch (type)
         {
             case 0:
-                this.planNameLabel.string = '计划名： ' + (this.plan.name ? this.plan.name : '');
+                this.planNameLabel.string = this.plan.name;
                 break;
             case 1:
                 this.wisdomLabel.string = '智慧加成（智慧上限200）: \n' + (this.plan.wisdomEffect >0 ? '+'+ this.plan.wisdomEffect : + this.plan.wisdomEffect);
@@ -151,17 +162,22 @@ export class EditPlanView extends cc.Component {
         }
     }
 
-    savePlanContext ()
+    async savePlanContext ()
     {
-        PlanContext.savelocalPlanData(this.plan);
-        // if (this.plan.wisdomEffect <= PlanValue.maxWisdom && this.plan.healthEffect <= PlanValue.maxHealth && this.plan.funEffect <= PlanValue.maxFun && this.plan.timeSpend <= PlanValue.maxTime)
-        // {
-        //     PlanContext.savelocalPlanData(this.plan);
-        // }
-        // else
-        // {
-        //     console.log('超出最大限制');
-        // }
+        for (let planName of PlanContext.planNameList)
+        {
+            if (planName && this.plan.name == planName)
+            {
+                console.log('任务名重复');
+                return false;
+            }
+        }
+        PlanContext.localPlans.push(this.plan);
+        console.log('本地任务, = ', PlanContext.localPlans);
+        PlanContext.planNameList.push(this.plan.name);
+        await PlanContext.savelocalData('planNameList', PlanContext.planNameList);
+        await PlanContext.savelocalSinglePlanData(this.plan.name, this.plan);
+        return true;
     }
 
     // update (dt) {}

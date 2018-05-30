@@ -29,9 +29,10 @@ export class MainView extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        PlanContext.init();
+        console.log('Main onLoad');
+        // PlanContext.init();
         this.startButton.node.on('click', event1 => {
-            if (PlanContext.localPlans)
+            if (PlanContext.localPlans.length)
             {
                 cc.director.loadScene('StartPlan');
             }

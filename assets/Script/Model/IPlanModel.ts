@@ -13,6 +13,7 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export interface IPlanModel{
     name?: string;
+    // type?: number;
     wisdomEffect?: number;
     healthEffect?: number;
     funEffect?: number;
